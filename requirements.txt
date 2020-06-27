@@ -2,3 +2,4 @@ ortools==7.7.7810
 pika==1.1.0
 protobuf==3.12.2
 six==1.15.0
+marshmallow==3.6.1
