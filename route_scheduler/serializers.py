@@ -5,17 +5,17 @@ coordinate = fields.Tuple((fields.Integer, fields.Integer))
 
 
 class TaskSchema(Schema):
-    cars = fields.Integer()
-    start = fields.Integer()
-    coordinates = fields.List(coordinate)
-    tid = fields.Integer()
+    cars = fields.Integer(required=True)
+    start = fields.Integer(required=True)
+    coordinates = fields.List(coordinate, required=True)
+    tid = fields.Integer(required=True)
 
 
 class ResultSchema(Schema):
-    visiting_order = fields.List(fields.Integer())
-    objective = fields.Integer()
-    length = fields.Integer()
-    tid = fields.Integer()
+    visiting_order = fields.List(fields.Integer(required=True))
+    objective = fields.Integer(required=True)
+    length = fields.Integer(required=True)
+    tid = fields.Integer(required=True)
 
 
 task_schema = TaskSchema()
