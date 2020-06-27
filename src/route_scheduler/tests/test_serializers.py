@@ -1,3 +1,4 @@
+import json
 from route_scheduler.serializers import deserialize_task, serialize_result
 
 
@@ -14,4 +15,5 @@ expected_res = '{"visiting_order": [0, 1, 2, 0], "length": 200, "objective": 200
 
 def test_serialize_result_basic():
     route = ([0, 1, 2, 0], 200, 200)
-    assert serialize_result(route) == expected_res
+    # use json.loads to prevent failing on str comparison due to ordering
+    assert json.loads(serialize_result(route)) == json.loads(expected_res)
