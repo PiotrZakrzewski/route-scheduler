@@ -1,8 +1,8 @@
 import pika
+from con_util import connect_with_retry
 
-credentials = pika.PlainCredentials("user", "bitnami")
-params = pika.ConnectionParameters("localhost", 5672, credentials=credentials)
-connection = pika.BlockingConnection(params)
+
+connection = connect_with_retry()
 
 channel = connection.channel()
 

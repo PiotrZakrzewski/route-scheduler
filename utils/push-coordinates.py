@@ -1,10 +1,10 @@
 import pika
 import json
 import random
+from con_util import connect_with_retry
 
-credentials = pika.PlainCredentials("user", "bitnami")
-params = pika.ConnectionParameters("localhost", 5672, credentials=credentials)
-connection = pika.BlockingConnection(params)
+
+connection = connect_with_retry()
 channel = connection.channel()
 channel.queue_declare(queue="coordinates")
 random_cords = [(random.randint(0, 1000), random.randint(0, 1000)) for _ in range(10)]
