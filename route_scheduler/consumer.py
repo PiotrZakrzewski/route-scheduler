@@ -1,7 +1,11 @@
 import os
+import logging
 import pika
 from route_scheduler.serializers import deserialize_task, serialize_result
 from route_scheduler.scheduler import find_routes
+from marshmallow.exceptions import MarshmallowError
+
+log = logging.getLogger("consumer")
 
 
 def start_consuming():
@@ -16,9 +20,16 @@ def start_consuming():
     channel = connection.channel()
 
     def callback(ch, method, properties, body):
-        task = deserialize_task(body)
+        try:
+            task = deserialize_task(body)
+        except MarshmallowError:
+            log.error("Could not parse message %s", body)
+            return
         coordinates, start, cars = task["coordinates"], task["start"], task["cars"]
         route = find_routes(coordinates, start, cars)
+        if not route:
+            log.error("Could not find any route for %s", task)
+            return
         msg = serialize_result(route)
         channel.basic_publish(exchange="", routing_key="results", body=msg)
 

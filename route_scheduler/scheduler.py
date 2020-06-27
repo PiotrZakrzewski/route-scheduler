@@ -25,7 +25,8 @@ def _optimize_route(d_mat: DistMatrix, start: int, cars: int) -> Route:
         routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC
     )
     solution = routing.SolveWithParameters(search_parameters)
-    return _format_solution(manager, routing, solution)
+    if solution:
+        return _format_solution(manager, routing, solution)
 
 
 def _format_solution(manager, routing, solution) -> Route:
