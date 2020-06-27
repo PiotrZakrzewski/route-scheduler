@@ -10,6 +10,11 @@ services:
       - '15672:15672'
     volumes:
       - 'rabbitmq_data:/bitnami'
+  schedapp:
+    build: ./
+    network_mode: host
+    depends_on:
+      - rabbitmq
 volumes:
   rabbitmq_data:
     driver: local
