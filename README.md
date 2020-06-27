@@ -10,4 +10,9 @@ source env/bin/activate
 install dependancies
 ```bash
 pip install -r requirements.txt
+pip install -r requirements-dev.txt
+```
+Install pre-commit hooks
+```bash
+pre-commit install
 ```
