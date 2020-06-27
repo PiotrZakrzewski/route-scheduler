@@ -9,7 +9,7 @@ channel = connection.channel()
 channel.queue_declare(queue="coordinates")
 
 
-task = {"coordinates": [(0, 1), (1, 0)], "start": 0, "cars": 1}
+task = {"coordinates": [(0, 1), (1, 0)], "start": 0, "cars": 1, "tid": 1337}
 
 channel.basic_publish(exchange="", routing_key="coordinates", body=json.dumps(task))
 print(" [x] Sent {}".format(task))

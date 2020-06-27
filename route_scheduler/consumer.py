@@ -23,14 +23,15 @@ def start_consuming():
         try:
             task = deserialize_task(body)
         except MarshmallowError:
-            log.error("Could not parse message %s", body)
+            log.error("Invalid task %s", body)
             return
-        coordinates, start, cars = task["coordinates"], task["start"], task["cars"]
+        coordinates, start = task["coordinates"], task["start"]
+        cars, t_id = task["cars"], task["tid"]
         route = find_routes(coordinates, start, cars)
         if not route:
             log.error("Could not find any route for %s", task)
             return
-        msg = serialize_result(route)
+        msg = serialize_result(route, t_id)
         channel.basic_publish(exchange="", routing_key="results", body=msg)
 
     channel.queue_declare(queue="coordinates")
