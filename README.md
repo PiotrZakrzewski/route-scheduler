@@ -16,3 +16,8 @@ Install pre-commit hooks
 ```bash
 pre-commit install
 ```
+# Build Package
+You can build the package with
+```bash
+python setup.py sdist bdist_wheel
+```
